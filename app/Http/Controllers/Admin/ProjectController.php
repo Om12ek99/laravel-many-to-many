@@ -91,15 +91,17 @@ class ProjectController extends Controller
     public function update(UpdatePostRequest $request, Project $newProject)
     {
         
-      $data= $request->validate ([
-        'title' => 'required', 'max:255',
-        'content' => 'required',
-        'type_id'=> 'nullable',
-        ]);
+        $data= $request->validated();
         $data['slug'] = Str::slug($data['title']);
+
+        //da chiedere ai tutor.
+        // perche senza questa istruzione non aggiunge type id nella tabella project?
+        $newProject->type_id = $data['type_id'];
         $newProject->update($data);
 
-        return redirect()->route('admin.project.show', $newProject->slug)->with('success', 'project ' . $newProject->title . ' è stato modificato');    }
+        // dd($newProject);
+
+        return redirect()->route('admin.project.index', $newProject->slug)->with('success', 'project ' . $newProject->title . ' è stato modificato');    }
 
     /**
      * Remove the specified resource from storage.
