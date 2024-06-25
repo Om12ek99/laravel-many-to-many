@@ -18,6 +18,7 @@
                 <th>Title</th>
                 <th>Tipo</th>
                 <th>Slug</th>
+                <th>Tecnologia</th>
                 <th>Azioni</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                     <td>{{ $curProject->title }}</td>
                     <td>{{ $curProject->type?->project_type}}</td>
                     <td>{{ $curProject->slug }}</td>
+                    <td></td>
                     <td>            
                         {{-- link per lo show        < --}}
                         <a href="{{ route('admin.project.show',['newProject'=>$curProject->slug])}}" class="btn btn-info">Mostra</a>
