@@ -11,12 +11,11 @@
             </svg>
         </div>
         <h1 class="display-5 fw-bold">
-            Welcome to Laravel+Bootsrap 5
+            Your Online project Manager
         </h1>
 
         <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-        <button class="btn btn-primary btn-lg" type="button">Example button</button>
-    </div>
+        <a class="btn btn-primary btn-lg" href="{{ route('login') }}" role="button">Login</a>    </div>
 </div>
 
 <div class="content">
