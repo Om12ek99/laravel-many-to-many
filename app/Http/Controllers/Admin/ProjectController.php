@@ -17,12 +17,10 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $projects = Project::all();
-        $technologies = Technology::all();
-        //    dd($technologies);
-        return view('admin.project.index', compact('projects', 'technologies'));
-    }
+{
+    $projects = Project::with('technologies')->get();
+    return view('admin.project.index', compact('projects'));
+}
 
     /**
      * Show the form for creating a new resource.

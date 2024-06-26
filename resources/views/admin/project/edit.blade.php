@@ -33,12 +33,17 @@
             </select>
         </div>        
         <div class="form-group">
-            <label for="tech_id">Tecnologia usata</label>
-            <select class="form-select" name="tech_id" id="tech_id">
-                <option value="">Seleziona</option>
+            <label for="tech_ids">Tecnologia usata</label>
+            <select class="form-select" name="tech_ids[]" id="tech_ids" >
                 @foreach ($technologies as $tech)
-                    <option value="{{ $tech->id }}" {{ $tech->id == old('tech_id', $newProject->tech_id) ? 'selected' : '' }}>{{ $tech->project_tech}}</option>
-                @endforeach                
+                    <option value="{{ $tech->id }}" 
+                        @if (is_array(old('tech_ids')))
+                            {{ in_array($tech->id, old('tech_ids')) ? 'selected' : '' }}
+                        @else
+                            {{ in_array($tech->id, $newProject->technologies->pluck('id')->toArray()) ? 'selected' : '' }}
+                        @endif
+                    >{{ $tech->project_tech }}</option>
+                @endforeach
             </select>
         </div>        
         <button type="submit" class="btn btn-primary">Salva</button>
