@@ -20,8 +20,8 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $technologies = Technology::all();
-    //    dd($technologies);
-        return view('admin.project.index', compact('projects','technologies'));
+        //    dd($technologies);
+        return view('admin.project.index', compact('projects', 'technologies'));
     }
 
     /**
@@ -37,19 +37,19 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StorePostRequest $request)
-{
-    $data = $request->validated();
-    $data['slug'] = Str::slug($request->title);
+    {
+        $data = $request->validated();
+        $data['slug'] = Str::slug($request->title);
 
-    $newProject = Project::create($data);
+        $newProject = Project::create($data);
 
-    // uso di synch se la richiesta include tech_id
-    if ($request->has('tech_ids')) {
-        $newProject->technologies()->sync($request->tech_ids);
+        // uso di synch se la richiesta include tech_id
+        if ($request->has('tech_ids')) {
+            $newProject->technologies()->sync($request->tech_ids);
+        }
+
+        return redirect()->route('admin.project.index');
     }
-
-    return redirect()->route('admin.project.index');
-}
 
     /**
      * Display the specified resource.
@@ -85,7 +85,7 @@ class ProjectController extends Controller
         $types = Type::all();
         $technologies = Technology::all();
         // dd($newProject->technologies);
-        return view('admin.project.edit', compact('newProject','types','technologies'));
+        return view('admin.project.edit', compact('newProject', 'types', 'technologies'));
     }
 
     /**
@@ -93,17 +93,18 @@ class ProjectController extends Controller
      */
     public function update(UpdatePostRequest $request, Project $newProject)
     {
-        
-        $data= $request->validated();
+        $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
-        
         $newProject->update($data);
-        // dd($newProject);
 
-        // dd($data, $request->all());
+        // Sync the technologies
+        if ($request->has('tech_ids')) {
+            $newProject->technologies()->sync($request->tech_ids);
+        }
 
-        return redirect()->route('admin.project.index', $newProject->slug)->with('success', 'project ' . $newProject->title . ' è stato modificato');    }
+        return redirect()->route('admin.project.index')->with('success', 'Project ' . $newProject->title . ' è stato modificato');
+    }
 
     /**
      * Remove the specified resource from storage.
