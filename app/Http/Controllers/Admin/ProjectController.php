@@ -68,7 +68,6 @@ class ProjectController extends Controller
         // corrisponde al valore fornito in $slug.
         // da non confondere con il newProject nel seeder!!!
         $newProject = Project::where('slug', $slug)->first();
-
         // implemento il ciclo che aborta in caso non ci sia un post
         if (!$newProject) {
             abort(404);

@@ -35,16 +35,16 @@
                     </td>
                     <td>            
                         {{-- link per lo show        < --}}
-                        <a href="{{ route('admin.project.show',['newProject'=>$curProject->slug])}}" class="btn btn-info">Mostra</a>
+                        <a href="{{ route('admin.project.show',['newProject'=>$curProject->slug])}}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                         {{-- link per l'edit --}}
-                        <a href="{{ route('admin.project.edit', ['newProject' => $curProject->slug]) }}" class="btn btn-warning">Modifica</a>
+                        <a href="{{ route('admin.project.edit', ['newProject' => $curProject->slug]) }}" class="btn btn-warning"><i class="fa-solid fa-pen"></i></a>
 
                         {{-- link per il destroy --}}
                         {{-- nell'action alla chiamata di destroy, si prende come riferimento lo slug e non l'id, perche nella rotta la abbiamo definita cosi --}}
                         <form action="{{ route('admin.project.destroy', ['newProject'=>$curProject->slug]) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Elimina</button>
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>
