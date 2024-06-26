@@ -30,7 +30,7 @@
                     <td>{{ $curProject->type?->project_type }}</td>
                     <td>{{ $curProject->slug }}</td>
                     <td> @foreach ($curProject->technologies as $technology)
-                         {{ $technology->project_tech }}
+                         <p class="badge" style="background:{{$technology->description}}">{{ $technology->project_tech }}</p>
                          @endforeach
                     </td>
                     <td>            
