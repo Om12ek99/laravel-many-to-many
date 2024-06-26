@@ -34,18 +34,19 @@
         </div>        
         <div class="form-group">
             <label for="tech_ids">Tecnologia usata</label>
-            <select class="form-select" name="tech_ids[]" id="tech_ids" >
-                @foreach ($technologies as $tech)
-                    <option value="{{ $tech->id }}" 
-                        @if (is_array(old('tech_ids')))
-                            {{ in_array($tech->id, old('tech_ids')) ? 'selected' : '' }}
-                        @else
-                            {{ in_array($tech->id, $newProject->technologies->pluck('id')->toArray()) ? 'selected' : '' }}
+            @foreach ($technologies as $tech)
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="tech_ids[]" id="tech_{{ $tech->id }}" value="{{ $tech->id }}"
+                        @if (is_array(old('tech_ids')) && in_array($tech->id, old('tech_ids')))
+                            checked
+                        @elseif ($newProject->technologies->contains($tech->id))
+                            checked
                         @endif
-                    >{{ $tech->project_tech }}</option>
-                @endforeach
-            </select>
-        </div>        
+                    >
+                    <label class="form-check-label" for="tech_{{ $tech->id }}">{{ $tech->project_tech }}</label>
+                </div>
+            @endforeach
+        </div>              
         <button type="submit" class="btn btn-primary">Salva</button>
     </form>
 @endsection
