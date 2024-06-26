@@ -32,6 +32,15 @@
                 @endforeach                
             </select>
         </div>        
+        <div class="form-group">
+            <label for="tech_id">Tecnologia usata</label>
+            <select class="form-select" name="tech_id" id="tech_id">
+                <option value="">Seleziona</option>
+                @foreach ($technologies as $tech)
+                    <option value="{{ $tech->id }}" {{ $tech->id == old('tech_id', $newProject->tech_id) ? 'selected' : '' }}>{{ $tech->project_tech}}</option>
+                @endforeach                
+            </select>
+        </div>        
         <button type="submit" class="btn btn-primary">Salva</button>
     </form>
 @endsection

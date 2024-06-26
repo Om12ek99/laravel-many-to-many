@@ -20,6 +20,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $technologies = Technology::all();
+        // dd($projects);
         return view('admin.project.index', compact('projects','technologies'));
     }
 
@@ -46,6 +47,7 @@ class ProjectController extends Controller
         $newProject->title = $request->title;
         $newProject->content = $request->content;
         $newProject->type_id = $request->type_id;
+        $newProject->tech_id = $request->tech_id;
         $newProject->slug = Str::slug($request->title);
         $newProject->save();
 
@@ -98,11 +100,9 @@ class ProjectController extends Controller
         $data= $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
-        // da chiedere ai tutor.
-        // perche senza questa istruzione non aggiunge type id nella tabella project?
-        // $newProject->type_id = $data['type_id'];
-        // dd($data);
+        
         $newProject->update($data);
+        dd($newProject);
 
         // dd($data, $request->all());
 
