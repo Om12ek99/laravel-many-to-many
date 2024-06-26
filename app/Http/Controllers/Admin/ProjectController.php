@@ -82,7 +82,7 @@ class ProjectController extends Controller
     public function edit(Project $newProject)
     {
         $types = Type::all();
-        // dd($newProject->technologies);
+        dd($newProject->technologies);
         return view('admin.project.edit', compact('newProject','types'));
     }
 
@@ -95,7 +95,7 @@ class ProjectController extends Controller
         $data= $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
-        //da chiedere ai tutor.
+        // da chiedere ai tutor.
         // perche senza questa istruzione non aggiunge type id nella tabella project?
         $newProject->type_id = $data['type_id'];
         $newProject->update($data);

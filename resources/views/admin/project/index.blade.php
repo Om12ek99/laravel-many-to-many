@@ -27,9 +27,12 @@
                 <tr>
                     <td>{{ $curProject->id }}</td>
                     <td>{{ $curProject->title }}</td>
-                    <td>{{ $curProject->type?->project_type}}</td>
+                    <td>{{ $curProject->type?->project_type }}</td>
                     <td>{{ $curProject->slug }}</td>
-                    <td></td>
+                    <td> @foreach ($curProject->technologies as $technology)
+                         {{ $technology->project_tech }}
+                         @endforeach
+                    </td>
                     <td>            
                         {{-- link per lo show        < --}}
                         <a href="{{ route('admin.project.show',['newProject'=>$curProject->slug])}}" class="btn btn-info">Mostra</a>
