@@ -20,7 +20,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
         $technologies = Technology::all();
-        // dd($projects);
+    //    dd($technologies);
         return view('admin.project.index', compact('projects','technologies'));
     }
 
@@ -37,22 +37,19 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StorePostRequest $request)
-    {
-        //validazione dei valori della tabella richiesti
-        $data= $request->validated();
-        // dd($data);
+{
+    $data = $request->validated();
+    $data['slug'] = Str::slug($request->title);
 
-        // da non confondere con il newProject nel seeder!!!
-        $newProject = new Project();
-        $newProject->title = $request->title;
-        $newProject->content = $request->content;
-        $newProject->type_id = $request->type_id;
-        $newProject->tech_id = $request->tech_id;
-        $newProject->slug = Str::slug($request->title);
-        $newProject->save();
+    $newProject = Project::create($data);
 
-        return redirect()->route('admin.project.index');
+    // uso di synch se la richiesta include tech_id
+    if ($request->has('tech_ids')) {
+        $newProject->technologies()->sync($request->tech_ids);
     }
+
+    return redirect()->route('admin.project.index');
+}
 
     /**
      * Display the specified resource.
@@ -102,7 +99,7 @@ class ProjectController extends Controller
 
         
         $newProject->update($data);
-        dd($newProject);
+        // dd($newProject);
 
         // dd($data, $request->all());
 
