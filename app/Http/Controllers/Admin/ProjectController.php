@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Str;
 
@@ -18,7 +19,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view('admin.project.index', compact('projects'));
+        $technologies = Technology::all();
+        return view('admin.project.index', compact('projects','technologies'));
     }
 
     /**
@@ -82,8 +84,9 @@ class ProjectController extends Controller
     public function edit(Project $newProject)
     {
         $types = Type::all();
-        dd($newProject->technologies);
-        return view('admin.project.edit', compact('newProject','types'));
+        $technologies = Technology::all();
+        // dd($newProject->technologies);
+        return view('admin.project.edit', compact('newProject','types','technologies'));
     }
 
     /**
@@ -97,10 +100,11 @@ class ProjectController extends Controller
 
         // da chiedere ai tutor.
         // perche senza questa istruzione non aggiunge type id nella tabella project?
-        $newProject->type_id = $data['type_id'];
+        // $newProject->type_id = $data['type_id'];
+        // dd($data);
         $newProject->update($data);
 
-        // dd($newProject);
+        // dd($data, $request->all());
 
         return redirect()->route('admin.project.index', $newProject->slug)->with('success', 'project ' . $newProject->title . ' è stato modificato');    }
 
