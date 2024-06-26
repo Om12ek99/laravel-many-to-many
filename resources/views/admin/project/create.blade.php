@@ -29,9 +29,18 @@
                     @foreach ($types as $type)
                     <option value="{{$type->id}}">{{$type->project_type}}</option>
                     @endforeach                
-            </select>
-            
-        </div>        
+            </select>            
+        </div>       
+        <div class="form-group">
+            <label for="tech_ids">Tecnologia usata</label>
+            @foreach ($technologies as $tech)
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="tech_ids[]" id="tech_{{ $tech->id }}" value="{{ $tech->id }}"
+                        {{ is_array(old('tech_ids')) && in_array($tech->id, old('tech_ids')) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="tech_{{ $tech->id }}">{{ $tech->project_tech }}</label>
+                </div>
+            @endforeach
+        </div>     
         <button type="submit" class="btn btn-primary">Salva</button>
     </form>
 @endsection
