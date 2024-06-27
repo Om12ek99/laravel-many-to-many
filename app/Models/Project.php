@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $table = 'project';
 
-    protected $fillable = ['title', 'content', 'slug', 'type_id','tech_id'];
+    protected $fillable = ['title', 'content', 'slug', 'type_id','tech_id','cover_image'];
 
 
     public function type(){

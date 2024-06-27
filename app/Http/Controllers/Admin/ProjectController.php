@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -39,14 +40,22 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($request->title);
-
-        $newProject = Project::create($data);
+        if ($request->hasFile('image')) {
+            // Salvo il file nel storage e mi crea una nuova cartella in public chiamata wine_images
+            $image_path = Storage::put('cover_images', $request->image);
+            // salvo il path del file nei dati da inserire nel daabase
+            $data['cover_image'] = $image_path;
+        }
+        // dd($data);
+        $newProject = new Project();
+        $newProject->fill($data);
+        $newProject->save();;
+        // $newProject = Project::create($data);
 
         // uso di synch se la richiesta include tech_id
         if ($request->has('tech_ids')) {
             $newProject->technologies()->sync($request->tech_ids);
         }
-
         return redirect()->route('admin.project.index');
     }
 
