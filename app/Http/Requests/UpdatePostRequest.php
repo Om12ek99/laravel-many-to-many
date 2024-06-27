@@ -27,7 +27,7 @@ class UpdatePostRequest extends FormRequest
             'content' => 'required',
             'type_id'=> ['nullable', 'exists:type,id'],
             'tech_id'=> ['nullable', 'exists:technologies,id'],
-            'cover_image' => 'required',
+            'cover_image' => 'nullable',
         ];
     }
 }
