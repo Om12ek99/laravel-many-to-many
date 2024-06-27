@@ -25,6 +25,8 @@ class StorePostRequest extends FormRequest
             'title' => 'required|max:255',
             'content' => 'required',
             'type_id'=> ['nullable', 'exists:type,id'],
+            'tech_id'=> ['nullable', 'exists:technologies,id'],
+            'cover_image' => 'required',
         ];
     }
 }
