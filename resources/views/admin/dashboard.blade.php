@@ -14,7 +14,15 @@
                             </div>
                         @endif
 
-                        {{ __('You are logged in!') }}
+                        Ciao {{$user->name}}! {{ __('You are logged in!') }}
+
+                        <hr>
+                        <div>
+                            <dl>
+                                <dt>Email Utente</dt>
+                                <dd>{{$user->UserDetail?->email}}</dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
             </div>
