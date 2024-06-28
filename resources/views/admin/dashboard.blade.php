@@ -20,6 +20,8 @@
                         <div>
                             <dl>
                                 <dt>Email Utente</dt>
+
+                                {{-- cosi devo salvare a mano in ophpmyadmin la mail --}}
                                 <dd>{{$user->UserDetail?->email}}</dd>
                             </dl>
                         </div>
