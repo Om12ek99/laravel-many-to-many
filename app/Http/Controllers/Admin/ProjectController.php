@@ -43,6 +43,8 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($request->title);
+        $data['user_id'] = Auth::id();
+        // dd($data);
         if ($request->hasFile('image')) {
             // Salvo il file nel storage e mi crea una nuova cartella in public chiamata wine_images
             $image_path = Storage::put('cover_images', $request->image);
@@ -80,11 +82,9 @@ class ProjectController extends Controller
         // corrisponde al valore fornito in $slug.
         // da non confondere con il newProject nel seeder!!!
         $newProject = Project::where('slug', $slug)->first();
-        if ($newProject->user_id !== Auth::id()) {
-            abort(403);
-         };
-        // implemento il ciclo che aborta in caso non ci sia un post
-        if (!$newProject) {
+    
+        // implemento il ciclo che aborta in caso non ci sia un post oppure che l'utente non puoavere accesso
+        if (!$newProject or $newProject->user_id !== Auth::id()) {
             abort(404);
         }
 
