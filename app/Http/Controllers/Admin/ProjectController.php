@@ -11,6 +11,7 @@ use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -18,10 +19,12 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $projects = Project::with('technologies')->get();
-    return view('admin.project.index', compact('projects'));
-}
+    {
+        $curUser = Auth::id();
+        $projects = Project::with('technologies')->get();
+        $projectArray = Project::where('user_id', $curUser)->get();
+        return view('admin.project.index', compact('projects','projectArray'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -30,7 +33,7 @@ class ProjectController extends Controller
     {
         $technologies = Technology::all();
         $types = Type::all();
-        return view("admin.project.create", compact("types","technologies"));
+        return view("admin.project.create", compact("types", "technologies"));
     }
 
     /**
@@ -77,6 +80,9 @@ class ProjectController extends Controller
         // corrisponde al valore fornito in $slug.
         // da non confondere con il newProject nel seeder!!!
         $newProject = Project::where('slug', $slug)->first();
+        if ($newProject->user_id !== Auth::id()) {
+            abort(403);
+         };
         // implemento il ciclo che aborta in caso non ci sia un post
         if (!$newProject) {
             abort(404);
